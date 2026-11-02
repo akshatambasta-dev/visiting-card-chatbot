@@ -761,7 +761,7 @@
           }
 
           const msg = `Hello Deepak ji, I am ${name}. My company/challenge: ${challenge}. Contact: ${phone}. I would like to schedule the ₹501 consultation session via Buddhi Framework.`;
-          const waUrl = `https://wa.me/919999999999?text=${encodeURIComponent(msg)}`;
+          const waUrl = `https://wa.me/918591250348?text=${encodeURIComponent(msg)}`;
           window.open(waUrl, '_blank');
 
           bookingCard.innerHTML = `
@@ -784,7 +784,7 @@
         ctaBox.innerHTML = `
           <div class="cta-title">Direct Contact Channels</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <a href="https://wa.me/919999999999?text=Hello%20Deepak%20ji,%20I%20would%20like%20to%20discuss%20a%20business%20challenge." target="_blank" rel="noopener noreferrer" class="chat-action-btn wa-btn">
+            <a href="https://wa.me/918591250348?text=Hello%20Deepak%20ji,%20I%20would%20like%20to%20discuss%20a%20business%20challenge." target="_blank" rel="noopener noreferrer" class="chat-action-btn wa-btn">
               💬 WhatsApp Desk
             </a>
             <a href="mailto:ceo4wisdom@gmail.com?subject=Consulting%20Inquiry%20via%20Buddhi%20Framework" class="chat-action-btn email-btn">
