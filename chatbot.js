@@ -195,6 +195,7 @@
       this.bindEvents();
       this.loadHistory();
       this.initProactiveWelcome();
+      this.initScrollAwareSuggestions();
     }
 
     initSpeechRecognition() {
@@ -335,6 +336,37 @@
             this.playChime();
           }
         }, 2600);
+      }
+    }
+
+    initScrollAwareSuggestions() {
+      const sectionChipsMap = {
+        'results': ['🎬 Film Case Study (₹60L)', '📜 Rule No. 78', '💼 Debt Restructuring'],
+        'author': ['📖 Deepak\'s Writing', '📰 Mint & Financial Times', '👤 About Deepak'],
+        'book': ['📖 Who are the 10 women?', 'Author Buddhi', 'Publication Plan'],
+        'journey': ['🏛️ Hindustan Instruments (1968)', '⚡ 2030 IPO Roadmap', '👤 Deepak Jain Bio'],
+        'buddhi': ['📜 Rule No. 78', '📜 Rule No. 80', 'Four Pillars', '🤝 Book Session'],
+        'coming-soon': ['🎓 Join Gen Z Cohort', '🎙️ Podcasts & Webinars', '🤝 Contact Desk'],
+        'contact': ['🤝 Book ₹501 Consultation', '💬 WhatsApp Desk', '👥 Careers & Internships'],
+        'dream': ['⚡ What is Agrivoltaics?', '☀️ Cost of 8 MW Plant', '🤝 Book ₹501 Session']
+      };
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.isTyping) {
+              const secId = entry.target.id;
+              if (sectionChipsMap[secId]) {
+                this.updateSuggestions(sectionChipsMap[secId]);
+              }
+            }
+          });
+        }, { threshold: 0.35 });
+
+        Object.keys(sectionChipsMap).forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
+        });
       }
     }
 
