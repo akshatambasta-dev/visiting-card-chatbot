@@ -321,7 +321,7 @@
 
       if (!dismissed && !chatOpened) {
         setTimeout(() => {
-          if (!this.window.classList.contains('is-open')) {
+          if (!this.window.classList.contains('is-open') && sessionStorage.getItem('buddhi_toast_dismissed') !== 'true') {
             const hour = new Date().getHours();
             let salutation = 'Good day';
             if (hour < 12) salutation = 'Good morning';
@@ -330,6 +330,8 @@
 
             this.toastText.innerHTML = `👋 <strong>${salutation}!</strong> I'm <strong>Buddhi</strong>, Deepak Jain's strategy advisor. Exploring debt relief, marketing, or our ₹501 consultation?`;
             this.toast.classList.remove('is-hidden');
+            this.toast.classList.add('is-visible');
+            this.toast.style.display = 'flex';
             this.playChime();
           }
         }, 2600);
@@ -338,18 +340,32 @@
 
     bindEvents() {
       // Toast triggers
-      this.toastOpen.addEventListener('click', () => {
-        this.dismissToast();
+      this.toastOpen.addEventListener('click', (e) => {
+        this.dismissToast(e);
         this.toggleChat(true);
       });
-      this.toastClose.addEventListener('click', () => this.dismissToast());
+      this.toastClose.addEventListener('click', (e) => this.dismissToast(e));
+      this.toastClose.addEventListener('touchend', (e) => this.dismissToast(e));
 
       // Toggle chat
       this.launcher.addEventListener('click', () => {
         this.dismissToast();
         this.toggleChat();
       });
-      this.closeBtn.addEventListener('click', () => this.toggleChat(false));
+      this.closeBtn.addEventListener('click', (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.toggleChat(false);
+      });
+      this.closeBtn.addEventListener('touchend', (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.toggleChat(false);
+      });
 
       // Sound toggle
       this.soundBtn.addEventListener('click', () => {
@@ -431,14 +447,22 @@
       });
     }
 
-    dismissToast() {
+    dismissToast(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if (!this.toast) return;
+      this.toast.classList.remove('is-visible');
       this.toast.classList.add('is-hidden');
+      this.toast.style.display = 'none';
       sessionStorage.setItem('buddhi_toast_dismissed', 'true');
     }
 
     toggleChat(forceState) {
       const isOpen = forceState !== undefined ? forceState : !this.window.classList.contains('is-open');
       if (isOpen) {
+        this.dismissToast();
         this.window.classList.add('is-open');
         this.launcher.classList.add('is-active');
         this.window.setAttribute('aria-hidden', 'false');

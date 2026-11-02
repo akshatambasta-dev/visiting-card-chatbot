@@ -22,25 +22,27 @@
   gap: 10px;
   z-index: 9997;
   font-family: var(--font-body, 'Karla', sans-serif);
-  animation: toast-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+  transform: translateY(16px) scale(0.95);
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+}
+
+#buddhi-welcome-toast.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  display: flex !important;
 }
 
 #buddhi-welcome-toast.is-hidden {
-  opacity: 0;
-  transform: translateY(12px) scale(0.96);
-  pointer-events: none;
-}
-
-@keyframes toast-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(12px) scale(0.95) !important;
 }
 
 .toast-avatar-box {
@@ -100,17 +102,24 @@
 }
 
 .toast-close-btn {
-  background: none;
+  background: transparent;
   border: none;
   color: var(--text-soft, #4D473C);
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1.15rem;
   line-height: 1;
-  padding: 2px;
+  padding: 4px 8px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  transition: all 0.15s ease;
 }
 
 .toast-close-btn:hover {
+  background: rgba(140, 61, 46, 0.14);
   color: var(--accent-strong, #8C3D2E);
 }
 
@@ -266,7 +275,8 @@
   opacity: 0;
   transform: translateY(20px) scale(0.96);
   pointer-events: none;
-  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;
+  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
   font-family: var(--font-body, 'Karla', sans-serif);
 }
 
@@ -274,6 +284,7 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+  visibility: visible;
 }
 
 /* Header */
@@ -586,12 +597,6 @@
 .chat-action-btn.email-btn {
   background: var(--navy-800, #152B49);
   color: var(--ivory, #F7F1E4);
-}
-
-.chat-action-btn.form-btn {
-  background: var(--gold-500, #C79B44);
-  color: #152B49;
-  font-weight: 700;
 }
 
 .chat-action-btn:hover {
