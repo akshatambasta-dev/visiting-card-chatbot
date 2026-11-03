@@ -634,41 +634,17 @@ nav{
   100%{transform:scale(1.1); box-shadow:0 0 12px var(--gold-light)}
 }
 
-/* Crisp Wing Collar Shirt */
+/* Executive Formal Shirt */
 .mentor .shirt{
   position:absolute;
   width:68px;
   height:152px;
   bottom:0;
   left:101px;
-  background:#f9f8f4;
+  background:linear-gradient(180deg, #15243d 0%, #0d1726 100%);
   clip-path:polygon(0 0, 100% 0, 68% 100%, 32% 100%);
-  box-shadow:inset 0 0 10px rgba(0,0,0,0.1);
+  box-shadow:inset 0 0 10px rgba(0,0,0,0.25);
   z-index:1;
-}
-
-/* Folded Collar Wings */
-.collar-wing-left{
-  position:absolute;
-  top:128px;
-  left:101px;
-  width:24px;
-  height:24px;
-  background:#ffffff;
-  clip-path:polygon(0 0, 100% 0, 30% 100%);
-  z-index:3;
-  box-shadow:0 2px 4px rgba(0,0,0,0.18);
-}
-.collar-wing-right{
-  position:absolute;
-  top:128px;
-  right:101px;
-  width:24px;
-  height:24px;
-  background:#ffffff;
-  clip-path:polygon(0 0, 100% 0, 70% 100%);
-  z-index:3;
-  box-shadow:0 2px 4px rgba(0,0,0,0.18);
 }
 
 /* Silk Necktie with Animated Light Sheen */
@@ -1144,26 +1120,6 @@ nav{
   transform:scale(1.3);
   box-shadow:0 0 0 3px var(--gold), 0 0 20px var(--gold);
 }
-.milestone-photo-wrap{
-  width:100%;
-  height:115px;
-  border-radius:var(--radius-sm);
-  overflow:hidden;
-  margin-bottom:14px;
-  border:1.5px solid rgba(201,164,92,0.35);
-  box-shadow:0 6px 16px rgba(0,0,0,0.12);
-  background:var(--navy);
-}
-.milestone-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform 0.4s ease;
-}
-.milestone:hover .milestone-img{
-  transform:scale(1.06);
-}
 
 .milestone strong{font-family:var(--font-display);font-size:28px;color:var(--navy);line-height:1}
 .milestone h3{font-size:15px;margin:8px 0;font-weight:700;color:var(--navy)}
@@ -1537,10 +1493,8 @@ footer{background:var(--navy-dark);color:#8e9cb0;padding:28px 0;font-size:11.5px
    <!-- Tailored Midnight Navy Blazer -->
    <div class="body"></div>
 
-   <!-- Wing Collar Shirt -->
+   <!-- Executive Formal Shirt -->
    <div class="shirt"></div>
-   <div class="collar-wing-left"></div>
-   <div class="collar-wing-right"></div>
 
    <!-- Peaked Notched Suit Lapels with Gold Edge Stitching -->
    <div class="mentor-lapel-left"></div>
@@ -1780,9 +1734,6 @@ footer{background:var(--navy-dark);color:#8e9cb0;padding:28px 0;font-size:11.5px
 
  <div class="journey-grid reveal">
   <div class="milestone">
-    <div class="milestone-photo-wrap">
-      <img src="assets/images/history-hindustan-instruments-store.jpg" alt="Hindustan Instruments 1968 Historical Storefront" class="milestone-img" loading="lazy" />
-    </div>
     <strong>1968</strong>
     <h3>Hindustan Instruments</h3>
     <p>Family founded, supplying precision industrial instrumentation to BHEL, Grasim, and Space/Atomic Energy departments.</p>

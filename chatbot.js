@@ -298,24 +298,6 @@
       `;
       document.body.appendChild(windowEl);
 
-      // 4. Fullscreen Zoom Lightbox Modal
-      const lightbox = document.createElement('div');
-      lightbox.id = 'buddhi-lightbox-modal';
-      lightbox.innerHTML = `
-        <div class="lightbox-content">
-          <button type="button" class="lightbox-close-btn" id="buddhi-lightbox-close" title="Close Lightbox">✕</button>
-          <img src="assets/images/buddhi-strategy-session.jpg" alt="Buddhi Growth Accelerator Session" class="lightbox-img" />
-          <div class="lightbox-caption">
-            <div>
-              <h4>BUDDHI: Your Growth Accelerator</h4>
-              <p>Analyze · Strategy · Execution · Measurable Results</p>
-            </div>
-            <span style="font-size:0.75rem; color:#E4C784; font-weight:700;">Deepak Jain Strategy Hub</span>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(lightbox);
-
       this.toast = toast;
       this.toastClose = toast.querySelector('#buddhi-toast-close');
       this.toastOpen = toast.querySelector('#buddhi-toast-open');
@@ -323,7 +305,6 @@
 
       this.launcher = launcher;
       this.window = windowEl;
-      this.lightbox = lightbox;
       this.messagesContainer = windowEl.querySelector('#buddhi-chat-messages');
       this.suggestionsContainer = windowEl.querySelector('#buddhi-chat-suggestions');
       this.input = windowEl.querySelector('#buddhi-chat-input');
@@ -490,69 +471,14 @@
         }
       });
 
-      // Lightbox close events
-      const lbClose = document.getElementById('buddhi-lightbox-close');
-      if (lbClose) {
-        lbClose.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.closeLightbox();
-        });
-      }
-      if (this.lightbox) {
-        this.lightbox.addEventListener('click', (e) => {
-          if (e.target === this.lightbox) this.closeLightbox();
-        });
-      }
-
       // Escape key to close
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          if (this.lightbox && this.lightbox.classList.contains('is-open')) {
-            this.closeLightbox();
-          } else if (this.window.classList.contains('is-open')) {
+          if (this.window.classList.contains('is-open')) {
             this.toggleChat(false);
           }
         }
       });
-    }
-
-    renderShowcaseBanner() {
-      if (!this.messagesContainer) return;
-      if (this.messagesContainer.querySelector('.chat-showcase-card')) return;
-
-      const card = document.createElement('div');
-      card.className = 'chat-showcase-card';
-      card.innerHTML = `
-        <div class="showcase-img-wrap" title="Click to view full workshop">
-          <img src="assets/images/buddhi-strategy-session.jpg" alt="Buddhi Growth Accelerator Strategy Session" class="showcase-img" />
-          <div class="showcase-overlay">
-            <div class="showcase-badge">
-              <span class="showcase-dot"></span>
-              BUDDHI · Growth Accelerator
-            </div>
-            <div class="showcase-caption">
-              <strong>Strategy in Action</strong>
-              <span>Analyze · Strategy · Execution · Results</span>
-            </div>
-          </div>
-          <button type="button" class="showcase-zoom-btn" title="Zoom full image">🔍</button>
-        </div>
-      `;
-
-      card.querySelector('.showcase-img-wrap').addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.openLightbox();
-      });
-
-      this.messagesContainer.insertBefore(card, this.messagesContainer.firstChild);
-    }
-
-    openLightbox() {
-      if (this.lightbox) this.lightbox.classList.add('is-open');
-    }
-
-    closeLightbox() {
-      if (this.lightbox) this.lightbox.classList.remove('is-open');
     }
 
     dismissToast(e) {
@@ -571,7 +497,6 @@
       const isOpen = forceState !== undefined ? forceState : !this.window.classList.contains('is-open');
       if (isOpen) {
         this.dismissToast();
-        this.renderShowcaseBanner();
         this.window.classList.add('is-open');
         this.launcher.classList.add('is-active');
         this.window.setAttribute('aria-hidden', 'false');
@@ -616,7 +541,6 @@
 
     loadHistory() {
       const saved = sessionStorage.getItem('buddhi_chat_history');
-      this.renderShowcaseBanner();
       if (saved) {
         try {
           const msgs = JSON.parse(saved);
@@ -643,7 +567,6 @@
     }
 
     sendGreeting() {
-      this.renderShowcaseBanner();
       const { reply, chips } = KNOWLEDGE_BASE.greetings.handler();
       this.renderMessage('bot', reply, { chips }, true);
     }
