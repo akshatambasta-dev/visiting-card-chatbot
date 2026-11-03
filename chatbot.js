@@ -94,8 +94,8 @@
     },
 
     buddhi_framework: {
-      triggers: ['buddhi', 'buddhi framework', 'methodology', 'rules', 'philosophy', 'how you work', 'rules we work by', 'strategy'],
-      reply: `The **Buddhi Framework** is an in-house consulting methodology engineered to replace endless theoretical reports with **accountability and immediate execution**.\n\nTwo core rules we work by:\n- **Rule No. 78**: *"Overthinking kills deals. Simple execution closes them."*\n- **Rule No. 80**: *"Look after everyone, from the junior teammate to the biggest client. That is how you grow a company and your career."*\n\nWe start from what your business actually needs, not just what's in a preliminary brief, delivering progress you can measure from week one.`,
+      triggers: ['buddhi', 'buddhi framework', 'methodology', 'rules', 'philosophy', 'how you work', 'rules we work by', 'strategy', 'accelerator'],
+      reply: `The **Buddhi Framework** (as visualized in our strategy workshop above) is an in-house consulting methodology engineered to replace endless theoretical reports with **accountability and immediate execution**.\n\n**The 4-Stage Accelerator Model**:\n1. 🔍 **Analyze**: Script, financials, and core bottleneck diagnosis\n2. 💡 **Strategy**: Finding practical non-traditional routes (e.g. in-film placement, debt re-negotiation)\n3. ⚡ **Execution**: Hands-on deployment with seasoned veterans and young tech minds\n4. 📈 **Results**: Measurable progress you can see and track\n\nTwo core rules we work by:\n- **Rule No. 78**: *"Overthinking kills deals. Simple execution closes them."*\n- **Rule No. 80**: *"Look after everyone, from the junior teammate to the biggest client. That is how you grow a company and your career."*`,
       sectionId: 'buddhi',
       sectionLabel: 'Explore the Buddhi Framework',
       chips: ['Case Study 001', 'Rule No. 78', 'Rule No. 80', '💼 Consulting Services']
@@ -298,6 +298,24 @@
       `;
       document.body.appendChild(windowEl);
 
+      // 4. Fullscreen Zoom Lightbox Modal
+      const lightbox = document.createElement('div');
+      lightbox.id = 'buddhi-lightbox-modal';
+      lightbox.innerHTML = `
+        <div class="lightbox-content">
+          <button type="button" class="lightbox-close-btn" id="buddhi-lightbox-close" title="Close Lightbox">✕</button>
+          <img src="assets/images/buddhi-strategy-session.jpg" alt="Buddhi Growth Accelerator Session" class="lightbox-img" />
+          <div class="lightbox-caption">
+            <div>
+              <h4>BUDDHI: Your Growth Accelerator</h4>
+              <p>Analyze · Strategy · Execution · Measurable Results</p>
+            </div>
+            <span style="font-size:0.75rem; color:#E4C784; font-weight:700;">Deepak Jain Strategy Hub</span>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(lightbox);
+
       this.toast = toast;
       this.toastClose = toast.querySelector('#buddhi-toast-close');
       this.toastOpen = toast.querySelector('#buddhi-toast-open');
@@ -305,6 +323,7 @@
 
       this.launcher = launcher;
       this.window = windowEl;
+      this.lightbox = lightbox;
       this.messagesContainer = windowEl.querySelector('#buddhi-chat-messages');
       this.suggestionsContainer = windowEl.querySelector('#buddhi-chat-suggestions');
       this.input = windowEl.querySelector('#buddhi-chat-input');
@@ -471,12 +490,69 @@
         }
       });
 
+      // Lightbox close events
+      const lbClose = document.getElementById('buddhi-lightbox-close');
+      if (lbClose) {
+        lbClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.closeLightbox();
+        });
+      }
+      if (this.lightbox) {
+        this.lightbox.addEventListener('click', (e) => {
+          if (e.target === this.lightbox) this.closeLightbox();
+        });
+      }
+
       // Escape key to close
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.window.classList.contains('is-open')) {
-          this.toggleChat(false);
+        if (e.key === 'Escape') {
+          if (this.lightbox && this.lightbox.classList.contains('is-open')) {
+            this.closeLightbox();
+          } else if (this.window.classList.contains('is-open')) {
+            this.toggleChat(false);
+          }
         }
       });
+    }
+
+    renderShowcaseBanner() {
+      if (!this.messagesContainer) return;
+      if (this.messagesContainer.querySelector('.chat-showcase-card')) return;
+
+      const card = document.createElement('div');
+      card.className = 'chat-showcase-card';
+      card.innerHTML = `
+        <div class="showcase-img-wrap" title="Click to view full workshop">
+          <img src="assets/images/buddhi-strategy-session.jpg" alt="Buddhi Growth Accelerator Strategy Session" class="showcase-img" />
+          <div class="showcase-overlay">
+            <div class="showcase-badge">
+              <span class="showcase-dot"></span>
+              BUDDHI · Growth Accelerator
+            </div>
+            <div class="showcase-caption">
+              <strong>Strategy in Action</strong>
+              <span>Analyze · Strategy · Execution · Results</span>
+            </div>
+          </div>
+          <button type="button" class="showcase-zoom-btn" title="Zoom full image">🔍</button>
+        </div>
+      `;
+
+      card.querySelector('.showcase-img-wrap').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.openLightbox();
+      });
+
+      this.messagesContainer.insertBefore(card, this.messagesContainer.firstChild);
+    }
+
+    openLightbox() {
+      if (this.lightbox) this.lightbox.classList.add('is-open');
+    }
+
+    closeLightbox() {
+      if (this.lightbox) this.lightbox.classList.remove('is-open');
     }
 
     dismissToast(e) {
@@ -495,6 +571,7 @@
       const isOpen = forceState !== undefined ? forceState : !this.window.classList.contains('is-open');
       if (isOpen) {
         this.dismissToast();
+        this.renderShowcaseBanner();
         this.window.classList.add('is-open');
         this.launcher.classList.add('is-active');
         this.window.setAttribute('aria-hidden', 'false');
@@ -539,6 +616,7 @@
 
     loadHistory() {
       const saved = sessionStorage.getItem('buddhi_chat_history');
+      this.renderShowcaseBanner();
       if (saved) {
         try {
           const msgs = JSON.parse(saved);
@@ -565,6 +643,7 @@
     }
 
     sendGreeting() {
+      this.renderShowcaseBanner();
       const { reply, chips } = KNOWLEDGE_BASE.greetings.handler();
       this.renderMessage('bot', reply, { chips }, true);
     }
