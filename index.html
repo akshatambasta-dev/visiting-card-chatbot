@@ -1894,6 +1894,105 @@ footer{background:var(--navy-dark);color:#8e9cb0;padding:28px 0;font-size:11.5px
 </section>
 </main>
 
+
+<!-- Project credits: appended without changing existing page sections -->
+<section class="project-credits" aria-labelledby="project-credits-title">
+  <div class="container project-credits-inner">
+    <div class="kicker">Project Acknowledgements</div>
+    <h2 class="heading" id="project-credits-title">The Team Behind This Website</h2>
+    <p class="project-credits-intro">A collaborative effort bringing together design, structure, content, and research.</p>
+    <div class="project-credits-grid">
+      <article class="project-credit">
+        <span class="project-credit-number">01</span>
+        <h3>Akshat Ambast</h3>
+        <p>Animation and design</p>
+      </article>
+      <article class="project-credit">
+        <span class="project-credit-number">02</span>
+        <h3>Ashna Rana</h3>
+        <p>Overall structure and content</p>
+      </article>
+      <article class="project-credit">
+        <span class="project-credit-number">03</span>
+        <h3>Vidhi Jain</h3>
+        <p>Helped with organizing data</p>
+      </article>
+    </div>
+  </div>
+</section>
+<style>
+.project-credits {
+  position: relative;
+  overflow: hidden;
+  padding: 76px 0 84px;
+  color: #f8f5ee;
+  background: linear-gradient(135deg, #0a1322 0%, #101d36 58%, #192e50 100%);
+  border-top: 1px solid rgba(201,164,92,.35);
+}
+.project-credits::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -170px;
+  top: -230px;
+  border: 1px solid rgba(201,164,92,.22);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38px rgba(201,164,92,.035), 0 0 0 82px rgba(201,164,92,.025);
+  pointer-events: none;
+}
+.project-credits-inner { position: relative; z-index: 1; }
+.project-credits .heading { color: #fff; max-width: 760px; }
+.project-credits .heading .gold { color: #c9a45c; }
+.project-credits-intro {
+  color: #c5ceda;
+  max-width: 620px;
+  font-size: 14px;
+  margin: 0 0 30px;
+}
+.project-credits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.project-credit {
+  position: relative;
+  min-height: 150px;
+  padding: 24px 22px;
+  border: 1px solid rgba(201,164,92,.38);
+  border-radius: 8px;
+  background: rgba(16,29,54,.62);
+  box-shadow: 0 12px 30px rgba(0,0,0,.16);
+}
+.project-credit-number {
+  display: block;
+  margin-bottom: 14px;
+  color: #e4c784;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.project-credit h3 {
+  margin: 0 0 7px;
+  color: #e4c784;
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 500;
+}
+.project-credit p {
+  margin: 0;
+  color: #d4dbe4;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.7;
+}
+@media (max-width: 700px) {
+  .project-credits { padding: 58px 0 64px; }
+  .project-credits-grid { grid-template-columns: 1fr; }
+  .project-credit { min-height: 0; }
+}
+</style>
+
 <footer>
   <div class="container footer-inner">
     <span>© <span id="year"></span> Deepak Jain · The Master Strategy Hub · Buddhi Framework</span>
