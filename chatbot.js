@@ -79,7 +79,7 @@
         else timeGreeting = 'Good evening';
 
         return {
-          reply: `${timeGreeting}! I am **Buddhi**, the official AI business advisor for **Deepak Jain**.\n\nWith over **40 years of hands-on business experience**, we help small and medium enterprises turn tough problems into measurable results.\n\nHow can I advise you today?\n- 💼 **Consulting Services** (Finance, Debt, Marketing, IT/AI, Solar)\n- 📜 **Buddhi Framework Rules & Case Studies**\n- 🤝 **Book a Strategy Session** (Nominal ₹501/- fee)\n- ⚡ **8 MW Agrivoltaics Solar Plant**\n- 📖 **The Upcoming Book**: *Breaking Walls, Building Legacy*\n- 🎓 **Gen Z Mentoring Cohort**`,
+          reply: `Hello! I'm Buddhi. My team and I help solve business challenges with practical solutions. You can explore our catalogue for our products and services, or tell me: what topic would you like to talk about today?`,
           chips: ['💼 Services', '📜 Buddhi Rules', '🤝 Book Session (₹501)', '⚡ 8 MW Solar', '📖 The Book']
         };
       }
